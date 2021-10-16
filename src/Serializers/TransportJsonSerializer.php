@@ -12,9 +12,6 @@ use Symfony\Component\Messenger\Transport\Serialization\Serializer as Base;
 
 final class TransportJsonSerializer extends Base
 {
-    /**
-     * TransportJsonSerializer constructor.
-     */
     public function __construct()
     {
         $normalizers = [

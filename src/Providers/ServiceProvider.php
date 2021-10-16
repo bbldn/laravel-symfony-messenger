@@ -85,7 +85,7 @@ class ServiceProvider extends Base
     }
 
     /**
-     * @return array
+     * @return HandlerDescriptor[]
      *
      * @psalm-return list<HandlerDescriptor>
      */

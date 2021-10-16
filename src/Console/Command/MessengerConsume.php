@@ -15,10 +15,10 @@ class MessengerConsume extends Command
 
     /**
      * @param Worker $worker
+     * @return void
      */
     public function handle(Worker $worker): void
     {
-
         $worker->run();
     }
 }

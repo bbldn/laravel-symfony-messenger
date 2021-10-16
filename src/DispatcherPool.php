@@ -8,12 +8,15 @@ use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
 
 final class DispatcherPool
 {
-    /** @psalm-var array<string, SenderInterface> */
+    /**
+     * @var SenderInterface[]
+     *
+     * @psalm-var array<string, SenderInterface>
+     */
     private array $pool;
 
     /**
-     * DispatcherPool constructor.
-     * @param array $pool
+     * @param SenderInterface[] $pool
      *
      * @psalm-var array<string, SenderInterface> $pool
      */
@@ -45,16 +48,16 @@ final class DispatcherPool
     private function getSender(string $channel): SenderInterface
     {
         if (false === key_exists($channel, $this->pool)) {
-            throw new Exception("Unknown channel: ${channel}");
+            throw new Exception("Unknown channel: $channel");
         }
 
         $sender = $this->pool[$channel];
         if (null === $sender) {
-            throw new Exception("Unknown channel: ${channel}");
+            throw new Exception("Unknown channel: $channel");
         }
 
         if (false === is_a($sender, SenderInterface::class)) {
-            throw new Exception("Channel ${channel} should implements SenderInterface");
+            throw new Exception("Channel $channel should implements SenderInterface");
         }
 
         return $sender;
