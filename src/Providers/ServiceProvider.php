@@ -29,7 +29,7 @@ class ServiceProvider extends Base
     /**
      * @return void
      */
-    private function registerCommands(): void
+    private function registerCommandList(): void
     {
         $this->commands(MessengerConsume::class);
     }
@@ -71,14 +71,14 @@ class ServiceProvider extends Base
                 $receivers[] = $receiver($queue, $serializer);
             }
 
-            $handlers = $this->getHandlers();
+            $handlers = $this->getHandlerList();
             $middleware = [new HandleMessageMiddleware(new HandlersLocator($handlers), false)];
             $messageBus = new MessageBus($middleware);
 
             $eventDispatcher = null;
 
             /** @var Logger $logger */
-            $logger = app()->make(Logger::class);
+            $logger = $this->app->make(Logger::class);
 
             return new Worker($receivers, $messageBus, $eventDispatcher, $logger);
         });
@@ -89,7 +89,7 @@ class ServiceProvider extends Base
      *
      * @psalm-return list<HandlerDescriptor>
      */
-    private function getHandlers(): array
+    private function getHandlerList(): array
     {
         return array_map(function (array $handlerClasses) {
             return array_map(function (string $handlerClass) {
@@ -107,6 +107,6 @@ class ServiceProvider extends Base
     {
         $this->loadConfig();
         $this->registerDispatcherPoolAndWorker();
-        $this->registerCommands();
+        $this->registerCommandList();
     }
 }
