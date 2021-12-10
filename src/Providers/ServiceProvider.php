@@ -94,7 +94,7 @@ class ServiceProvider extends Base
         return array_map(function (array $handlerClasses) {
             return array_map(function (string $handlerClass) {
                 return new HandlerDescriptor(function ($message) use ($handlerClass) {
-                    return app()->make($handlerClass)->handle($message);
+                    return $this->app->make($handlerClass)->handle($message);
                 });
             }, $handlerClasses);
         }, config('messenger.handlers', []));
